@@ -7,20 +7,20 @@ void comunicar()
       case 0: // Elegimos la opción
         switch(val)
         {
-          case '0':
-            //
-          break;
-
           case '1':
-            leer_sensores();
-            Serial.println("UNO");
+            Serial.println("Caso 1");
           break;
 
           case '2':
-            opciones=1;
+            leer_sensores();
+            Serial.println("dos");
           break;
 
           case '3':
+            opciones=1;
+          break;
+
+          case '4':
             //
 
           break;
@@ -33,7 +33,16 @@ void comunicar()
       break;
 
       case 1:
-      
+        switch(val)
+        {
+          case '1':
+            Serial.println("Caso 1, opción 1");
+          break;
+          case '3':
+            Serial.println("Caso 3, opción 1");
+
+          break;
+          }
       break;
 
       case 2:
@@ -50,4 +59,6 @@ void comunicar()
 
 
   }
+  Serial.print("Opciones: ");
+  Serial.println(opciones);
 }

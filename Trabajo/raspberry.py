@@ -11,8 +11,8 @@ while True:
   
   if necesito_sensores==1:
     print "Lectura sensores"
-    var = raw_input("Introducir un Comando: ") # O introduzco un comando o lo envio directamente
-    #var = '1' #Lee sensores
+    #var = raw_input("Introducir un Comando: ") # O introduzco un comando o lo envio directamente
+    #var = '1' #Lee sensores // probar con 1 '1' y "1"
     arduino.write(var)
     time.sleep(0.1)
     while arduino.inWaiting() > 0:
