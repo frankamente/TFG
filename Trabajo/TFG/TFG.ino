@@ -2,6 +2,14 @@
 #include <MsTimer2.h>
 #include "define.h"
 
+/*
+Esta variable nos va a servir para poder hacer diferentes funciones dentro de la comunicación
+Si su valor es 0 -> Nuestra comunicación hará las funciones generales, estar en reposo o cambiar de función.
+Si su valor es 1 -> Entrará en el modo movimiento, en este modo utilizamos otras funciones específicas.
+*/
+int opciones=0;
+
+
 /// Contadores de distancia de ruedas por encoder
 int distD=0,distDA=0;
 int distI=0,distIA=0;
@@ -55,32 +63,7 @@ void loop() {
   //{
    
     if (Serial.available ()) // si hay datos disponibles para leer
-    comunicar();/*
-    
-      val = Serial.read (); 
-      switch(val){
-                  case '0':
-                    //recibido=false;
-                    Serial.println("Reposo");
-                    //recibido=false;
-                  break;
-                
-                  case '1':
-                    leer_sensores();
-                    Serial.println("UNO");
-                  break;
-                 
-                 case '2':
-                    giro_izquierda(tray[p_tray][1]);
-                    Serial.println("Dos");
-                 break;
-                 
-                 case '3':
-
-              
-                 break;
-   }
-   /*}     */    
+    comunicar();
 /*////////////////////////////////// Mientras no llegue ningún dato, espera 10 ms y actualiza el tiempo y las distancias */
 delay(10);
     tiempo_a=tiempo;
