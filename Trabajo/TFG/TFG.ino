@@ -16,6 +16,7 @@ int distI=0,distIA=0;
 int adelante=0,atras=0;
 int estado=0;
 int intensidad=0,errorposicion=0, errorvelocidad=0,int_err=0,int_err_1=0;
+  int vu=0, avz=0;
 
 /// Trayectoria
 char  val;
@@ -59,15 +60,19 @@ void loop() {
   
   tiempo = millis();
     
- // if(recibido=true) 
-  //{
+  
    
-    if (Serial.available ()) // si hay datos disponibles para leer
+    //if (Serial.available ()) // si hay datos disponibles para leer
     comunicar();
+    if(recibido==true) 
+  {
+    recibir();
+  }
 /*////////////////////////////////// Mientras no llegue ningún dato, espera 10 ms y actualiza el tiempo y las distancias */
 delay(10);
+int a=0;
     tiempo_a=tiempo;
-    
+
     distDA=distD;
     distIA=distI;
 

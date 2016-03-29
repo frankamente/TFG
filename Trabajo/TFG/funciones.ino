@@ -2,7 +2,7 @@
 
 void mover_adelante()
 {
-  //Preparamos la salida para que el motor gire hacia delante
+  //Preparamos la salida para que el motor gire hacia adelante
   digitalWrite (IN3, HIGH);
   digitalWrite (IN4, LOW);
   digitalWrite (IN1, HIGH);
@@ -161,8 +161,9 @@ int control(int vueltas_deseadas, int dist)
 
 //////////////////////////// Movimientos ///////////////////////////////
 
-void avanzar(int vueltas)
+int avanzar(int vueltas)
 {
+  
     intensidad=control(vueltas,distI);
 Serial.print("Intensidad: ");
 Serial.print(intensidad);
@@ -190,12 +191,19 @@ Serial.println(distI);
         movimiento=false;
       }
 Serial.println("Para avz ");
+    distI=0;
+    distD=0;
+    return(1);
     }
 }
 
-void retroceder(int vueltas)
+int retroceder(int vueltas)
 {
     intensidad=control(vueltas,distI);
+    Serial.print("Intensidad: ");
+Serial.print(intensidad);
+Serial.print(" DistanciaI: ");
+Serial.println(distI);
     if (intensidad>30){
       avanza(intensidad);
     }
@@ -217,6 +225,9 @@ void retroceder(int vueltas)
         movimiento=false;
       }
 Serial.println("Para atras ");
+distI=0;
+    distD=0;
+    return(1);
     }
 }
 
@@ -251,7 +262,7 @@ Serial.println("Para der ");
     }
 }
 
-void giro_derecha_atras(int vueltas)
+int giro_derecha_atras(int vueltas)
 {
     intensidad=control(vueltas,distD);
     if (intensidad>30){

@@ -36,10 +36,10 @@ void comunicar()
         switch(val)
         {
           case '1':
-            Serial.println("Caso 1, opción 1");
+            Serial.println("Caso 1, opcion 1");
           break;
           case '3':
-            Serial.println("Caso 3, opción 1");
+            Serial.println("Caso 3, opcion 1");
 
           break;
           }

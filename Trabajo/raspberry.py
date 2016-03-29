@@ -2,7 +2,8 @@ import serial
 import time
 
 arduino=serial.Serial('/dev/ttyUSB0',baudrate=9600, timeout = 3.0)
-#arduino.open()
+arduino.close()
+arduino.open()
 txt=''
 i=0
 necesito_sensores=1
@@ -13,15 +14,15 @@ while True:
     print "Lectura sensores"
     #var = raw_input("Introducir un Comando: ") # O introduzco un comando o lo envio directamente
     #var = '1' #Lee sensores // probar con 1 '1' y "1"
-    arduino.write(var)
+    arduino.write(b"1")
     time.sleep(0.1)
     while arduino.inWaiting() > 0:
       txt = arduino.readline()
       print txt
-      if i==0:
+      #if i==0:
         izq=int(txt)
         print izq
-      if i==1:
+      #if i==1:
         centro=int(txt)
         print centro
       if i==2:
