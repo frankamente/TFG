@@ -59,6 +59,5 @@ void comunicar()
 
 
   }
-  Serial.print("Opciones: ");
-  Serial.println(opciones);
+  
 }

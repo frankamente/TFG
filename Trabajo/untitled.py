@@ -15,21 +15,18 @@ while True:
     print "Lectura sensores"
     #var = raw_input("Introducir un Comando: ") # O introduzco un comando o lo envio directamente
     #var = '1' #Lee sensores // probar con 1 '1' y "1"
-    arduino.write(b"1")
+    arduino.write(b"3")
     time.sleep(0.1)
     while arduino.inWaiting() > 0:
       txt = arduino.readline()
       print txt
-      #if i==0:
-        izq=int(txt)
+      if i==0:
+        izq=txt
         print izq
-      #if i==1:
-        centro=int(txt)
-        print centro
-      if i==2:
-        der=int(txt)
-        print der
+      if izq=="OK":
+        
+        print "SIRVE"
       txt = ''
-      i=i+1
+      #i=i+1
       necesito_sensores=0
   arduino.close()
