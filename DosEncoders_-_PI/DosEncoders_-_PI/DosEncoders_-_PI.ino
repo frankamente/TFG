@@ -52,7 +52,7 @@ void setup() {
 void loop() {
   
   tiempo = millis();
-    
+    avanzar(3);
   if(!recibido)
   {
     if (Serial.available ()) // si hay datos disponibles para leer
