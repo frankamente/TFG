@@ -1,3 +1,5 @@
+#EL OK SIRVE
+
 import serial
 import time
 
