@@ -34,8 +34,14 @@ max_payload_size = 32
 payload_size_increments_by = 1
 next_payload_size = min_payload_size
 inp_role = 'none'
+z=000
+z1=145
+z2=245
 nulo=999
-send_payload = bytes(nulo)
+send_payload = bytes(z)
+send_payload1 = bytes(z1)
+send_payload2 = bytes(z2)
+send_payload3 = bytes(nulo)
 #send_payload = b'ABCDEFGHIJKLMNOPQRSTUVWXYZ789012'
 millis = lambda: int(round(time.time() * 1000))
 
@@ -46,7 +52,7 @@ radio.printDetails()
 radio.openWritingPipe(pipes[0])
 radio.openReadingPipe(1,pipes[1])
 
-z=000
+
 
 
 print("[INFO] waiting for camera to warmup...")
@@ -55,14 +61,97 @@ time.sleep(2)
 
 # define the lower and upper boundaries of the "orange"
 # ball in the HSV color space
-orangeLower = (88, 118, 0)
-orangeUpper = (207, 194, 255)
+orangeLower = (4, 190, 75)
+orangeUpper = (41, 255, 255)
 
 
 
 
 # loop over the frames from the video stream
 while True:
+
+
+
+  radio.stopListening()
+  radio.write(send_payload[:next_payload_size])
+  radio.startListening()
+  started_waiting_at = millis()
+  timeout = False
+  while (not radio.available()) and (not timeout):
+      if (millis() - started_waiting_at) > 500:
+          timeout = True
+
+  # Describe the results
+  if timeout:
+      print('failed, response timed out.')
+  else:
+      # Grab the response, compare, and send to debugging spew
+      longitud = radio.getDynamicPayloadSize()
+      receive_payload = radio.read(longitud)
+
+      radio.stopListening()
+      radio.write(send_payload1[:next_payload_size])
+      radio.startListening()
+      started_waiting_at = millis()
+      timeout = False
+      while (not radio.available()) and (not timeout):
+          if (millis() - started_waiting_at) > 500:
+              timeout = True
+
+      # Describe the results
+      if timeout:
+          print('failed, response timed out.')
+      else:
+          # Grab the response, compare, and send to debugging spew
+          longitud = radio.getDynamicPayloadSize()
+          receive_payload = radio.read(longitud)
+
+          radio.stopListening()
+          radio.write(send_payload3[:next_payload_size])
+          radio.startListening()
+          started_waiting_at = millis()
+          timeout = False
+          while (not radio.available()) and (not timeout):
+              if (millis() - started_waiting_at) > 500:
+                  timeout = True
+
+          # Describe the results
+          if timeout:
+              print('failed, response timed out.')
+          else:
+              # Grab the response, compare, and send to debugging spew
+              longitud = radio.getDynamicPayloadSize()
+              receive_payload = radio.read(longitud)
+              radio.stopListening()
+              radio.write(send_payload2[:next_payload_size])
+              radio.startListening()
+              started_waiting_at = millis()
+              timeout = False
+              while (not radio.available()) and (not timeout):
+                  if (millis() - started_waiting_at) > 500:
+                      timeout = True
+
+              # Describe the results
+              if timeout:
+                  print('failed, response timed out.')
+              else:
+                  # Grab the response, compare, and send to debugging spew
+                  longitud = radio.getDynamicPayloadSize()
+                  receive_payload = radio.read(longitud)
+      
+
+      # Spew it
+    #  print('got response size={} value="{}"'.format(longitud, receive_payload.decode('utf-8'))) // If all ok i dont print anything
+
+  # Update size for next time.
+  next_payload_size += payload_size_increments_by
+  if next_payload_size > max_payload_size:
+      next_payload_size = min_payload_size
+
+
+
+
+
   # grab the next frame from the video stream, resize the
   # frame, and convert it to the HSV color space
   frame = vs.read()
@@ -98,82 +187,10 @@ while True:
       center = cX, cY
       # only proceed if the radius meets a minimum size
       if radius > 7:
-        # draw the circle and centroid on the frame
-        send_payload = bytes(z)
-        send_payload1 = bytes(cX)
-        send_payload2 = bytes(cY)
-        send_payload3 = bytes(nulo)
+      # draw the circle and centroid on the frame
         cv2.circle(frame, (int(x), int(y)), int(radius), (0, 255, 255), 2)
         cv2.circle(frame, center, 5, (0, 0, 255), -1)
-        radio.stopListening()
-        radio.write(send_payload[:next_payload_size])
-        radio.startListening()
-        started_waiting_at = millis()
-        timeout = False
-        while (not radio.available()) and (not timeout):
-            if (millis() - started_waiting_at) > 500:
-                timeout = True
-
-        # Describe the results
-        if timeout:
-            print('failed, response timed out.')
-        else:
-            # Grab the response, compare, and send to debugging spew
-            longitud = radio.getDynamicPayloadSize()
-            receive_payload = radio.read(longitud)
-
-            radio.stopListening()
-            radio.write(send_payload1[:next_payload_size])
-            radio.startListening()
-            started_waiting_at = millis()
-            timeout = False
-            while (not radio.available()) and (not timeout):
-                if (millis() - started_waiting_at) > 500:
-                    timeout = True
-
-            # Describe the results
-            if timeout:
-                print('failed, response timed out.')
-            else:
-                # Grab the response, compare, and send to debugging spew
-                longitud = radio.getDynamicPayloadSize()
-                receive_payload = radio.read(longitud)
-
-                radio.stopListening()
-                radio.write(send_payload3[:next_payload_size])
-                radio.startListening()
-                started_waiting_at = millis()
-                timeout = False
-                while (not radio.available()) and (not timeout):
-                    if (millis() - started_waiting_at) > 500:
-                        timeout = True
-
-                # Describe the results
-                if timeout:
-                    print('failed, response timed out.')
-                else:
-                    # Grab the response, compare, and send to debugging spew
-                    longitud = radio.getDynamicPayloadSize()
-                    receive_payload = radio.read(longitud)
-                    radio.stopListening()
-                    radio.write(send_payload2[:next_payload_size])
-                    radio.startListening()
-                    started_waiting_at = millis()
-                    timeout = False
-                    while (not radio.available()) and (not timeout):
-                        if (millis() - started_waiting_at) > 500:
-                            timeout = True
-
-                    # Describe the results
-                    if timeout:
-                        print('failed, response timed out.')
-                    else:
-                        # Grab the response, compare, and send to debugging spew
-                        longitud = radio.getDynamicPayloadSize()
-                        receive_payload = radio.read(longitud)
-        next_payload_size += payload_size_increments_by
         print("Funciona")
-        
       else:
         print("NO")
   # show the frame to our screen

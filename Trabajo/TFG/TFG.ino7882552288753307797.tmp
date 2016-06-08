@@ -19,7 +19,7 @@ char receive_payload[max_payload_size + 1]; // +1 to allow room for a terminatin
   Si su valor es 1 -> Entrará en el modo movimiento, en este modo utilizamos otras funciones específicas.
 */
 int opciones = 0;
-int posX, posY =0;
+
 
 /// Contadores de distancia de ruedas por encoder
 int distD = 0, distDA = 0;
@@ -93,19 +93,19 @@ void loop() {
 
 
  // si hay datos disponibles para leer
-   
-   comunicar();
+  
+    comunicar();
     if (recibido == true)
     {
       recibir();
     }
-  
-  /*////////////////////////////////// Mientras no llegue ningún dato, espera 10 ms y actualiza el tiempo y las distancias 
+  }
+  /*////////////////////////////////// Mientras no llegue ningún dato, espera 10 ms y actualiza el tiempo y las distancias */
   delay(10);
   int a = 0;
   tiempo_a = tiempo;
 
   distDA = distD;
   distIA = distI;
-*/
+
 }

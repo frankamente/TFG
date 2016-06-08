@@ -19,7 +19,7 @@ char receive_payload[max_payload_size + 1]; // +1 to allow room for a terminatin
   Si su valor es 1 -> Entrará en el modo movimiento, en este modo utilizamos otras funciones específicas.
 */
 int opciones = 0;
-int posX, posY =0;
+
 
 /// Contadores de distancia de ruedas por encoder
 int distD = 0, distDA = 0;
@@ -61,7 +61,7 @@ NewPing sonar3(TRIGGER_PIN3, ECHO_PIN3, MAX_DISTANCE); // NewPing setup of pins 
 
 
 void setup() {
-  Serial.begin(115200);
+  /*Serial.begin(115200);
   radio.begin();
   // enable dynamic payloads
   radio.enableDynamicPayloads();
@@ -81,7 +81,7 @@ void setup() {
   // Start listening
   radio.startListening();
   // Dump the configuration of the rf unit for debugging
-  radio.printDetails();
+  radio.printDetails();*/
   configInterrupciones();
   configMotores();
 }
@@ -93,19 +93,19 @@ void loop() {
 
 
  // si hay datos disponibles para leer
-   
-   comunicar();
+  
+    comunicar();
     if (recibido == true)
     {
       recibir();
     }
   
-  /*////////////////////////////////// Mientras no llegue ningún dato, espera 10 ms y actualiza el tiempo y las distancias 
+  /*////////////////////////////////// Mientras no llegue ningún dato, espera 10 ms y actualiza el tiempo y las distancias */
   delay(10);
   int a = 0;
   tiempo_a = tiempo;
 
   distDA = distD;
   distIA = distI;
-*/
+
 }
