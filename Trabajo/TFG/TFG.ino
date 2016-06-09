@@ -5,7 +5,7 @@
 #include "nRF24L01.h"
 #include "RF24.h"
 
-RF24 radio(7, 8);
+RF24 radio(22, 23);
 const uint64_t pipes[2] = { 0xF0F0F0F0E1LL, 0xF0F0F0F0D2LL };
 int role = 1; // Receptor 1, Emisor 0
 const int min_payload_size = 4;
@@ -19,7 +19,7 @@ char receive_payload[max_payload_size + 1]; // +1 to allow room for a terminatin
   Si su valor es 1 -> Entrará en el modo movimiento, en este modo utilizamos otras funciones específicas.
 */
 int opciones = 0;
-int posX, posY =0;
+int posX, posY = 0;
 
 /// Contadores de distancia de ruedas por encoder
 int distD = 0, distDA = 0;
@@ -92,20 +92,22 @@ void loop() {
 
 
 
- // si hay datos disponibles para leer
-   
-   comunicar();
-    if (recibido == true)
-    {
-      recibir();
-    }
-  
-  /*////////////////////////////////// Mientras no llegue ningún dato, espera 10 ms y actualiza el tiempo y las distancias 
-  delay(10);
-  int a = 0;
-  tiempo_a = tiempo;
+  // si hay datos disponibles para leer
+  if (recibido == false)
+  {
+    comunicar();
+  }
+  if (recibido == true)
+  {
+    accion();
+  }
 
-  distDA = distD;
-  distIA = distI;
-*/
+  /*////////////////////////////////// Mientras no llegue ningún dato, espera 10 ms y actualiza el tiempo y las distancias
+    delay(10);
+    int a = 0;
+    tiempo_a = tiempo;
+
+    distDA = distD;
+    distIA = distI;
+  */
 }

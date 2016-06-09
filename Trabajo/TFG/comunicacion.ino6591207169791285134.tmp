@@ -154,49 +154,47 @@ void comunicar()
 
 void accion() {
   if (posX > 250) {
-    int aviso = giro_derecha(10);
-    Serial.print("\nAviso: ");Serial.println(aviso);
+    int aviso = avanzar(10);
     if (aviso == 1) {
       avz = 0;
       Serial.println("OK");
       recibido = false;
     }
-  }
-  else {
-    int aviso = giro_derecha(0);
-    if (aviso == 1) {
-      avz = 0;
-      Serial.println("OK");
-      recibido = false;
-    }
-  }
-  /*
-    if (avz == 1) { //0 parado, 1 adelante, 2 atras
+    else {
+      int aviso = avanzar(0);
+      if (aviso == 1) {
+        avz = 0;
+        Serial.println("OK");
+        recibido = false;
+
+      }
+    }/*
+  if (avz == 1) { //0 parado, 1 adelante, 2 atras
     int aviso = avanzar(vu);
     if (aviso == 1) {
-    avz = 0;
-    Serial.println("OK");
-    recibido = false;
+      avz = 0;
+      Serial.println("OK");
+      recibido = false;
     }
-    }
+  }
 
-    if (avz == 2) { //0 parado, 1 adelante, 2 atras
+  if (avz == 2) { //0 parado, 1 adelante, 2 atras
     int aviso = retroceder(vu);
     if (aviso == 1) {
-    avz = 0;
-    Serial.println("OK");
-    recibido = false;
+      avz = 0;
+      Serial.println("OK");
+      recibido = false;
     }
-    }
-    if (avz == 3) { //0 parado, 1 adelante, 2 atras
+  }
+  if (avz == 3) { //0 parado, 1 adelante, 2 atras
     int aviso = giro_derecha_atras(vu);
     if (aviso == 1) {
-    avz = 0;
-    Serial.println("OK");
-    recibido = false;
+      avz = 0;
+      Serial.println("OK");
+      recibido = false;
     }
-    }
-  */
-}
+  }
+*/
+  }
 
 
