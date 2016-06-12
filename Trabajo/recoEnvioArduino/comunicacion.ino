@@ -1,4 +1,4 @@
-
+int primeraVez=0;
 int esX, esY = 0;
 void comunicar()
 {
@@ -31,9 +31,13 @@ void comunicar()
         Serial.println(receive_payload);
         aaa = atoi(receive_payload);
         if (aaa == 0) {
-          Serial.print("POZOOOOOOOOOO");
+          Serial.print("Tengo el cero");
           esX = 1;
           esY = 0;
+        }
+        else if(primeraVez==1){
+          posY=aaa;
+          
         }
         Serial.print("A: ");
         Serial.println(aaa);
@@ -78,7 +82,7 @@ void comunicar()
         Serial.println(receive_payload);
         aaa = atoi(receive_payload);
         if (aaa == 999) {
-          Serial.print("POZOOOOOOOOOO");
+          Serial.print("Tengo X");
           esX = 0;
           esY = 1;
         }
@@ -134,6 +138,7 @@ void comunicar()
         {
           posY = aaa;
           recibido = true;
+          primeraVez=1;
         }
 
         // First, stop listening so we can talk
@@ -154,7 +159,7 @@ void comunicar()
 
 void accion() {
   if (posX > 250) {
-    int aviso = giro_derecha(10);
+    int aviso = giro_derecha(5);
     Serial.print("\nAviso: ");Serial.println(aviso);
     if (aviso == 1) {
       avz = 0;
@@ -163,7 +168,7 @@ void accion() {
     }
   }
   else {
-    int aviso = giro_derecha(0);
+    int aviso = avanzar(5);
     if (aviso == 1) {
       avz = 0;
       Serial.println("OK");
