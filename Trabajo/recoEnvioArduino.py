@@ -116,7 +116,7 @@ while True:
 
         # Describe the results
         if timeout:
-            #print('failed, response timed out.')
+            print('Falla El Cero.')
         else:
             # Grab the response, compare, and send to debugging spew
             longitud = radio.getDynamicPayloadSize()
@@ -133,7 +133,7 @@ while True:
 
             # Describe the results
             if timeout:
-                #print('failed, response timed out.')
+                print('Falla el X.')
             else:
                 # Grab the response, compare, and send to debugging spew
                 longitud = radio.getDynamicPayloadSize()
@@ -150,7 +150,7 @@ while True:
 
                 # Describe the results
                 if timeout:
-                    #print('failed, response timed out.')
+                    print('Falla el Nulo.')
                 else:
                     # Grab the response, compare, and send to debugging spew
                     longitud = radio.getDynamicPayloadSize()
@@ -166,7 +166,7 @@ while True:
 
                     # Describe the results
                     if timeout:
-                        #print('failed, response timed out.')
+                        print('Falla la Y.')
                     else:
                         # Grab the response, compare, and send to debugging spew
                         longitud = radio.getDynamicPayloadSize()
