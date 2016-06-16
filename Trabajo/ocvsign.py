@@ -90,7 +90,7 @@ while True:
 	#canny = cv2.Canny(blurred, 10, 200)
 	canny = auto_canny(blurred)
  
-	(cnts, _) = cv2.findContours(canny.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+	(_, cnts , _) = cv2.findContours(canny.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 	cnts = sorted(cnts, key = cv2.contourArea, reverse = True)[:10]
 	
 	mask = np.ones(frame.shape[:2], dtype="uint8") * 255
@@ -166,7 +166,7 @@ while True:
 
 	# show the frame to our screen
 	image = frame.copy()
-	#cv2.imshow("Frame", frame)
+	cv2.imshow("Frame", frame)
 	#cv2.imshow("Gray", gray)
 	#cv2.imshow("Blurred", blurred)
 	#cv2.imshow("Edges", canny)
@@ -174,9 +174,9 @@ while True:
 	#cv2.imshow("Mask", mask)
 	#cv2.imshow("After", image)
 	cv2.imshow("Recorte", recorte)
-	cv2.imshow("Template1", template1)
-	cv2.imshow("Template2", template2)
-
+	cv2.imshow("Giro Izquierda", template1)
+	cv2.imshow("Giro Derecha", template2)
+	cv2.imshow("Stop", template3)
 
 
 
