@@ -32,8 +32,10 @@ void comunicar()
         aaa = atoi(receive_payload);
         if (aaa == 0) {
           Serial.print("Tengo el cero");
-          esX = 1;
+          esX = 0;
           esY = 0;
+          recibido=1;
+          radio.write(receive_payload,len );
         }
         else if(primeraVez==1){
           posY=aaa;
@@ -158,7 +160,7 @@ void comunicar()
 }
 
 void accion() {
-  if (posX > 250) {
+  /*if (posX > 250) {
     int aviso = giro_derecha(5);
     Serial.print("\nAviso: ");Serial.println(aviso);
     if (aviso == 1) {
@@ -174,7 +176,14 @@ void accion() {
       Serial.println("OK");
       recibido = false;
     }
-  }
+  }*/
+  int aviso = giro_izquierda(5);
+    Serial.print("\nAviso: ");Serial.println(aviso);
+    if (aviso == 1) {
+      avz = 0;
+      Serial.println("OK");
+      recibido = false;
+    }
   /*
     if (avz == 1) { //0 parado, 1 adelante, 2 atras
     int aviso = avanzar(vu);

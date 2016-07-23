@@ -119,6 +119,9 @@ radio.openWritingPipe(pipes[0])
 radio.openReadingPipe(1,pipes[1])
 
 z=000
+izq=1
+der=2
+stop=3
 
 
 
@@ -193,6 +196,7 @@ while True:
             giroder=0
             stop=0
             radio.stopListening()
+            send_payload = bytes(izq)
             radio.write(send_payload[:next_payload_size])
             radio.startListening()
             started_waiting_at = millis()
@@ -208,7 +212,7 @@ while True:
               # Grab the response, compare, and send to debugging spew
               longitud = radio.getDynamicPayloadSize()
               receive_payload = radio.read(longitud)
-              if int(longitud) > 0 and int(receive_payload)==1:
+              if int(longitud) > 0 and int(receive_payload)==izq:
                 print("Recibido ACK izquierda.")
               else:
                 print("No recibo bien el ACK izquierda.")
