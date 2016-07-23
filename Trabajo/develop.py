@@ -1,12 +1,14 @@
 from __future__ import print_function
 from imutils.video import VideoStream
 import imutils
-#import serial
+import serial
 import time
 from skimage.measure import compare_ssim as ssim
 import matplotlib.pyplot as plt
 import numpy as np
 import cv2
+from RF24 import *
+import RPi.GPIO as GPIO
 import argparse#construct the argument parseand parse the argum
 
 def auto_canny(image, sigma=0.33):
@@ -75,6 +77,52 @@ template3 = cv2.cvtColor(template3, cv2.COLOR_BGR2GRAY)
 template3 = cv2.GaussianBlur(template3, (9, 9), 0)
 template3 = auto_canny(template3)
 
+
+#/************************************************************************************/
+# Definicion de Radios y otros de envio
+#/************************************************************************************/
+
+irq_gpio_pin = None
+radio = RF24(22, 0);
+def try_read_data(channel=0):
+    if radio.available():
+        while radio.available():
+            len = radio.getDynamicPayloadSize()
+            receive_payload = radio.read(len)
+            print('Got payload size={} value="{}"'.format(len, receive_payload.decode('utf-8')))
+            # First, stop listening so we can talk
+            radio.stopListening()
+
+            # Send the final one back.
+            radio.write(receive_payload)
+            print('Sent response.')
+
+            # Now, resume listening so we catch the next packets.
+            radio.startListening()
+
+pipes = [0xF0F0F0F0E1, 0xF0F0F0F0D2]
+min_payload_size = 4
+max_payload_size = 32
+payload_size_increments_by = 1
+next_payload_size = min_payload_size
+inp_role = 'none'
+nulo=999
+send_payload = bytes(nulo)
+#send_payload = b'ABCDEFGHIJKLMNOPQRSTUVWXYZ789012'
+millis = lambda: int(round(time.time() * 1000))
+
+radio.begin()
+radio.enableDynamicPayloads()
+radio.setRetries(5,15)
+radio.printDetails()
+radio.openWritingPipe(pipes[0])
+radio.openReadingPipe(1,pipes[1])
+
+z=000
+
+
+
+
 print("[INFO] waiting for camera to warmup...")
 vs = VideoStream(0).start()
 time.sleep(2.0)
@@ -107,8 +155,8 @@ while True:
       if area > 10000:
         screenCnt = approx
         x,y,w,h = cv2.boundingRect(c)
-          cv2.rectangle(frame,(x,y),(x+w,y+h),(0,255,0),2)
-          recorte=canny[y:y+h,x:x+w ]
+        cv2.rectangle(frame,(x,y),(x+w,y+h),(0,255,0),2)
+        recorte=canny[y:y+h,x:x+w ]
         cv2.drawContours(mask, [c], -1, 0, -1)
         #recorte=imutils.resize(recorte, width=271)
         #recorte=imutils.resize(recorte, height=195)
@@ -144,6 +192,28 @@ while True:
             giroizq=0
             giroder=0
             stop=0
+            radio.stopListening()
+            radio.write(send_payload[:next_payload_size])
+            radio.startListening()
+            started_waiting_at = millis()
+            timeout = False
+            while (not radio.available()) and (not timeout):
+              if (millis() - started_waiting_at) > 500:
+                timeout = True
+
+        # Describe the results
+            if timeout:
+              print('Falla El Giro izquierda.')
+            else:
+              # Grab the response, compare, and send to debugging spew
+              longitud = radio.getDynamicPayloadSize()
+              receive_payload = radio.read(longitud)
+              if int(longitud) > 0 and int(receive_payload)==1:
+                print("Recibido ACK izquierda.")
+              else:
+                print("No recibo bien el ACK izquierda.")
+
+
           elif giroder > giroizq and giroder > stop:
             print("Giro Derecha")
             giroder=0
