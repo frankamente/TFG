@@ -30,12 +30,17 @@ void comunicar()
         Serial.print(F(" value="));
         Serial.println(receive_payload);
         aaa = atoi(receive_payload);
-        if (aaa == 0) {
-          Serial.print("Tengo el cero");
+        if (aaa == 1) {
+          Serial.print("Recibo giro izquierda");
           esX = 0;
           esY = 0;
+          radio.stopListening();
+
+        // Send the final one back.
+        radio.write( receive_payload, len );
+        Serial.println(F("Sent response."));
           recibido=1;
-          radio.write(receive_payload,len );
+          
         }
         else if(primeraVez==1){
           posY=aaa;
