@@ -188,7 +188,7 @@ while True:
         elif (s3) > (s1) and (s3) > (s2):
           stop=stop+1
           i=i+1
-        if i==20:
+        if i==40:
           i=0
           if giroizq > giroder and giroizq > stop:
             print("Giro Izquierda")
@@ -294,9 +294,9 @@ while True:
   #cv2.imshow("Mask", mask)
   #cv2.imshow("After", image)
   cv2.imshow("Recorte", recorte)
-  cv2.imshow("Giro Izquierda", template1)
-  cv2.imshow("Giro Derecha", template2)
-  cv2.imshow("Stop", template3)
+  #cv2.imshow("Giro Izquierda", template1)
+  #cv2.imshow("Giro Derecha", template2)
+  #cv2.imshow("Stop", template3)
 
 
 

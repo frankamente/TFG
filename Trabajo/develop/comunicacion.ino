@@ -1,4 +1,4 @@
-int primeraVez=0;
+int primeraVez = 0;
 int esX, esY = 0;
 void comunicar()
 {
@@ -6,189 +6,103 @@ void comunicar()
 
   if ( role == 1 && recibido == false)
   {
-    if (esX == 0 && esY == 0)
+
+    while ( radio.available() )
     {
-      while ( radio.available() )
-      {
 
-        // Fetch the payload, and see if this was the last one.
-        uint8_t len = radio.getDynamicPayloadSize();
+      // Fetch the payload, and see if this was the last one.
+      uint8_t len = radio.getDynamicPayloadSize();
 
-        // If a corrupt dynamic payload is received, it will be flushed
-        if (!len) {
-          continue;
-        }
-
-        radio.read( receive_payload, len );
-
-        // Put a zero at the end for easy printing
-        receive_payload[len] = 0;
-
-        // Spew it
-        Serial.print(F("Got response size="));
-        Serial.print(len);
-        Serial.print(F(" value="));
-        Serial.println(receive_payload);
-        aaa = atoi(receive_payload);
-        if (aaa == 1) {
-          Serial.print("Recibo giro izquierda");
-          esX = 0;
-          esY = 0;
-          radio.stopListening();
-
-        // Send the final one back.
-        radio.write( receive_payload, len );
-        Serial.println(F("Sent response."));
-          recibido=1;
-          
-        }
-        else if(primeraVez==1){
-          posY=aaa;
-          
-        }
-        Serial.print("A: ");
-        Serial.println(aaa);
-        // First, stop listening so we can talk
-        radio.stopListening();
-
-        // Send the final one back.
-        radio.write( receive_payload, len );
-        Serial.println(F("Sent response."));
-
-        // Now, resume listening so we catch the next packets.
-        radio.startListening();
+      // If a corrupt dynamic payload is received, it will be flushed
+      if (!len) {
+        continue;
       }
 
-    }
+      radio.read( receive_payload, len );
 
+      // Put a zero at the end for easy printing
+      receive_payload[len] = 0;
 
-
-
-    if (esX == 1 && esY == 0)
-    {
-      while ( radio.available() )
-      {
-
-        // Fetch the payload, and see if this was the last one.
-        uint8_t len = radio.getDynamicPayloadSize();
-
-        // If a corrupt dynamic payload is received, it will be flushed
-        if (!len) {
-          continue;
-        }
-
-        radio.read( receive_payload, len );
-
-        // Put a zero at the end for easy printing
-        receive_payload[len] = 0;
-
-        // Spew it
-        Serial.print(F("Got response size="));
-        Serial.print(len);
-        Serial.print(F(" value="));
-        Serial.println(receive_payload);
-        aaa = atoi(receive_payload);
-        if (aaa == 999) {
-          Serial.print("Tengo X");
-          esX = 0;
-          esY = 1;
-        }
-        else posX = aaa;
-        Serial.print("\nPosx: "); Serial.println(posX);
-        Serial.print("A: ");
-        Serial.println(aaa);
-        // First, stop listening so we can talk
+      // Spew it
+      Serial.print(F("Got response size="));
+      Serial.print(len);
+      Serial.print(F(" value="));
+      Serial.println(receive_payload);
+      aaa = atoi(receive_payload);
+      if (aaa == 1) {
+        Serial.print("Recibo giro izquierda");
+        esX = 1;
+        esY = 0;
         radio.stopListening();
-
         // Send the final one back.
         radio.write( receive_payload, len );
-        Serial.println(F("Sent response."));
+        Serial.println(F("Respuesta de giro izquierda enviado."));
+        recibido = 1;
 
-        // Now, resume listening so we catch the next packets.
-        radio.startListening();
       }
-
-    }
-
-
-
-    if (esX == 0 && esY == 1)
-    {
-      while ( radio.available() )
-      {
-
-        // Fetch the payload, and see if this was the last one.
-        uint8_t len = radio.getDynamicPayloadSize();
-
-        // If a corrupt dynamic payload is received, it will be flushed
-        if (!len) {
-          continue;
-        }
-
-        radio.read( receive_payload, len );
-
-        // Put a zero at the end for easy printing
-        receive_payload[len] = 0;
-
-        // Spew it
-        Serial.print(F("Got response size="));
-        Serial.print(len);
-        Serial.print(F(" value="));
-        Serial.println(receive_payload);
-        aaa = atoi(receive_payload);
-        if (aaa == 000) {
-          Serial.print("POZOOOOOOOOOO");
-          esX = 0;
-          esY = 0;
-        }
-        else
-        {
-          posY = aaa;
-          recibido = true;
-          primeraVez=1;
-        }
-
-        // First, stop listening so we can talk
+      else if (aaa == 2) {
+        Serial.print("Recibo giro derecha");
+        esX = 2;
+        esY = 0;
         radio.stopListening();
-
         // Send the final one back.
         radio.write( receive_payload, len );
-        Serial.println(F("Sent response."));
+        Serial.println(F("Respuesta de giro derecha enviado."));
+        recibido = 1;
 
-        // Now, resume listening so we catch the next packets.
-        radio.startListening();
       }
+      else if (aaa == 3) {
+        Serial.print("Recibo Stop");
+        esX = 3;
+        esY = 0;
+        radio.stopListening();
+        // Send the final one back.
+        radio.write( receive_payload, len );
+        Serial.println(F("Respuesta de stop enviado."));
+        recibido = 1;
 
+      }
+      else {
+        Serial.println(F("No recibo nada o no es lo que espero."));
+        esX = 3;
+      }
+      Serial.print("A: ");
+      Serial.println(aaa);
+      // Now, resume listening so we catch the next packets.
+      radio.startListening();
     }
   }
-  // if there is data ready
 }
 
 void accion() {
-  /*if (posX > 250) {
-    int aviso = giro_derecha(5);
-    Serial.print("\nAviso: ");Serial.println(aviso);
+  if (esX == 1) {
+    int aviso = giro_izquierda(5);
+    Serial.print("\nAviso: "); Serial.println(aviso);
     if (aviso == 1) {
       avz = 0;
       Serial.println("OK");
       recibido = false;
     }
   }
-  else {
-    int aviso = avanzar(5);
+  else if (esX == 2) {
+        int aviso = giro_derecha(5);
+    Serial.print("\nAviso: "); Serial.println(aviso);
     if (aviso == 1) {
       avz = 0;
       Serial.println("OK");
       recibido = false;
     }
-  }*/
-  int aviso = giro_izquierda(5);
-    Serial.print("\nAviso: ");Serial.println(aviso);
+  }
+    else if (esX == 3) {
+        int aviso = avanzar(5);
+    Serial.print("\nAviso: "); Serial.println(aviso);
     if (aviso == 1) {
       avz = 0;
       Serial.println("OK");
       recibido = false;
     }
+  }
+  
   /*
     if (avz == 1) { //0 parado, 1 adelante, 2 atras
     int aviso = avanzar(vu);
