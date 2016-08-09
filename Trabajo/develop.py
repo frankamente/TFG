@@ -223,11 +223,57 @@ while True:
             giroder=0
             giroizq=0
             stop=0
+            radio.stopListening()
+            send_payload = bytes(der)
+            radio.write(send_payload[:next_payload_size])
+            radio.startListening()
+            started_waiting_at = millis()
+            timeout = False
+            while (not radio.available()) and (not timeout):
+              if (millis() - started_waiting_at) > 500:
+                timeout = True
+
+        # Describe the results
+            if timeout:
+              print('Falla El Giro Derecha.')
+            else:
+              # Grab the response, compare, and send to debugging spew
+              longitud = radio.getDynamicPayloadSize()
+              receive_payload = radio.read(longitud)
+              if int(longitud) > 0 and int(receive_payload)==der:
+                print("Recibido ACK Derecha.")
+              else:
+                print("No recibo bien el ACK Derecha.")
+
+
           elif stop > giroizq and stop > giroder:
             print("Stop")
             giroder=0
             giroizq=0
             stop=0
+            radio.stopListening()
+            send_payload = bytes(stop)
+            radio.write(send_payload[:next_payload_size])
+            radio.startListening()
+            started_waiting_at = millis()
+            timeout = False
+            while (not radio.available()) and (not timeout):
+              if (millis() - started_waiting_at) > 500:
+                timeout = True
+
+        # Describe the results
+            if timeout:
+              print('Falla El Stop.')
+            else:
+              # Grab the response, compare, and send to debugging spew
+              longitud = radio.getDynamicPayloadSize()
+              receive_payload = radio.read(longitud)
+              if int(longitud) > 0 and int(receive_payload)==stop:
+                print("Recibido ACK stop.")
+              else:
+                print("No recibo bien el ACK stop.")
+
+
 
         break
       M = cv2.moments(c)
