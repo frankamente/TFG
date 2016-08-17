@@ -188,7 +188,7 @@ while True:
         elif (s3) > (s1) and (s3) > (s2):
           stop=stop+1
           i=i+1
-        if i==40:
+        if i==20:
           i=0
           if giroizq > giroder and giroizq > stop:
             print("Giro Izquierda")
