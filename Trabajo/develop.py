@@ -277,9 +277,9 @@ while True:
                 print("No recibo bien el ACK stop.")
 
 
-        stop=0
-        giroizq=0
-        giroder=0
+        #stop=0
+        #giroizq=0
+        #giroder=0
         break
       M = cv2.moments(c)
       if M["m00"] != 0:
