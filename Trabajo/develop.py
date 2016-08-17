@@ -288,14 +288,14 @@ while True:
 
   # show the frame to our screen
   image = frame.copy()
-  cv2.imshow("Frame", frame)
+  #cv2.imshow("Frame", frame)
   #cv2.imshow("Gray", gray)
   #cv2.imshow("Blurred", blurred)
   #cv2.imshow("Edges", canny)
   image = cv2.bitwise_and(image, image, mask=mask)
   #cv2.imshow("Mask", mask)
   #cv2.imshow("After", image)
-  cv2.imshow("Recorte", recorte)
+  #cv2.imshow("Recorte", recorte)
   #cv2.imshow("Giro Izquierda", template1)
   #cv2.imshow("Giro Derecha", template2)
   #cv2.imshow("Stop", template3)
