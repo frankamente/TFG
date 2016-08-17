@@ -177,11 +177,11 @@ while True:
         print(s1)
         print("\nS2: ")
         print(s2)
-        if (s1) > (s2) and (s1) > (s3):
+        if (s1) > (s2) and (s1) > (s3) and (m1) > (m2) and (m1) > (m3):
           giroizq+=1
           i=i+1
           #print("Giro Izquierda")
-        elif s2>s1 and s2>s3:
+        elif s2>s1 and s2>s3 and m2>m1 and m2>m3:
           giroder+=1
           i=i+1
           #print("Giro Derecha")
