@@ -169,6 +169,7 @@ while True:
         m2=mse(recorte,template2)
         s2=ssim(recorte, template2)
         s3=ssim(recorte, template3)
+        m3=mse(recorte,template3)
         print("\nM1: ")
         print(m1)
         print("\nM2: ")
