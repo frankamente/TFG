@@ -85,7 +85,7 @@ void accion() {
     }
   }
   else if (esX == 2) {
-        int aviso = giro_derecha(15);
+        int aviso = giro_derecha(10);
     Serial.print("\nAviso: "); Serial.println(aviso);
     if (aviso == 1) {
       avz = 0;
