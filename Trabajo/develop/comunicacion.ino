@@ -76,7 +76,7 @@ void comunicar()
 
 void accion() {
   if (esX == 1) {
-    int aviso = giro_izquierda(5);
+    int aviso = giro_izquierda(15);
     Serial.print("\nAviso: "); Serial.println(aviso);
     if (aviso == 1) {
       avz = 0;
@@ -85,7 +85,7 @@ void accion() {
     }
   }
   else if (esX == 2) {
-        int aviso = giro_derecha(5);
+        int aviso = giro_derecha(15);
     Serial.print("\nAviso: "); Serial.println(aviso);
     if (aviso == 1) {
       avz = 0;
@@ -94,7 +94,7 @@ void accion() {
     }
   }
     else if (esX == 3) {
-        int aviso = avanzar(5);
+        int aviso = avanzar(15);
     Serial.print("\nAviso: "); Serial.println(aviso);
     if (aviso == 1) {
       avz = 0;

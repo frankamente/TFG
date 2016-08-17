@@ -152,7 +152,7 @@ int control(int vueltas_deseadas, int dist)
   errorposicion = vueltas_deseadas - dist;
   int_err = int_err_1 + (errorposicion * 0.001);
   errorvelocidad = errorposicion / dif_tiempo;
-  intensidad = int(Kp * (errorposicion + (1 / Ti) * int_err));
+  intensidad = int(Kp * (errorposicion + (1 / Ti) * int_err))*1.6;
   int_err_1 = int_err;
 
   return intensidad;
