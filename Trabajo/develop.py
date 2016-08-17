@@ -169,24 +169,24 @@ while True:
         m2=mse(recorte,template2)
         s2=ssim(recorte, template2)
         s3=ssim(recorte, template3)
-        #print("\nM1: ")
-        #print(m1)
-        #print("\nM2: ")
-        #print(m2)
-        #print("\nS1: ")
-        #print(s1)
-        #print("\nS2: ")
-        #print(s2)
+        print("\nM1: ")
+        print(m1)
+        print("\nM2: ")
+        print(m2)
+        print("\nS1: ")
+        print(s1)
+        print("\nS2: ")
+        print(s2)
         if (s1) > (s2) and (s1) > (s3):
-          giroizq=giroizq+1
+          giroizq+=1
           i=i+1
           #print("Giro Izquierda")
         elif s2>s1 and s2>s3:
-          giroder=giroder+1
+          giroder+=1
           i=i+1
           #print("Giro Derecha")
         elif (s3) > (s1) and (s3) > (s2):
-          stop=stop+1
+          stop+=1
           i=i+1
         if i==20:
           i=0
