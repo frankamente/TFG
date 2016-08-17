@@ -178,17 +178,18 @@ while True:
         print(s1)
         print("\nS2: ")
         print(s2)
-        if (s1) > (s2) and (s1) > (s3) and (m1) > (m2) and (m1) > (m3):
+        if ((s1/s2)> (s2/s1) and (s1/s3) > (s3/s1)) or ((m1/m2)> (m2/m1) and (m1/m3) > (m3/m1)):
           giroizq+=1
           i=i+1
-          #print("Giro Izquierda")
-        elif s2>s1 and s2>s3 and m2>m1 and m2>m3:
+          print("Giro Izquierda")
+        elif ((s2/s1)> (s1/s2) and (s2/s3) > (s3/s2)) or ((m2/m1)> (m1/m2) and (m2/m3) > (m3/m2))::
           giroder+=1
           i=i+1
-          #print("Giro Derecha")
+          print("Giro Derecha")
         elif (s3) > (s1) and (s3) > (s2):
           stop+=1
           i=i+1
+          print("Stop")
         if i==5:
           i=0
           print("Izq= " + str(giroizq))
