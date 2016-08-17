@@ -190,9 +190,9 @@ while True:
           i=i+1
         if i==20:
           i=0
-          print("Izq= " + giroizq)
-          print("Der= " + giroder)
-          print("STOP= " + stop)
+          print("Izq= " + str(giroizq))
+          print("Der= " + str(giroder))
+          print("STOP= " + str(stop))
           if giroizq > giroder and giroizq > stop:
             print("Giro Izquierda")
             giroizq=0
