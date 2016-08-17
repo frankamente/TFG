@@ -189,7 +189,7 @@ while True:
         elif (s3) > (s1) and (s3) > (s2):
           stop+=1
           i=i+1
-        if i==20:
+        if i==5:
           i=0
           print("Izq= " + str(giroizq))
           print("Der= " + str(giroder))
