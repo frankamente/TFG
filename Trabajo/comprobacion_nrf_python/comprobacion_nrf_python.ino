@@ -188,22 +188,24 @@ void loop(void)
       receive_payload[len] = 0;
 
       // Spew it
-      Serial.print(F("Got response size="));
+      Serial.print(F("Recibo dato de longitud="));
       Serial.print(len);
-      Serial.print(F(" value="));
+      Serial.print(F(" valor="));
       Serial.println(receive_payload);
       int a = atoi(receive_payload);
       if (a==345){
-        Serial.print("POZOOOOOOOOOO");
+        Serial.print("Correcto\n");
       }
-      Serial.print("A: ");
-      Serial.println(a);
+      else {
+        Serial.println("No es lo esperado")
+      }
+      
       // First, stop listening so we can talk
       radio.stopListening();
 
       // Send the final one back.
       radio.write( receive_payload, len );
-      Serial.println(F("Sent response."));
+      Serial.println(F("Respuesta enviada."));
 
       // Now, resume listening so we catch the next packets.
       radio.startListening();
