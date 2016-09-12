@@ -98,7 +98,7 @@ while 1:
         radio.stopListening()
 
         # Take the time, and send it.  This will block until complete
-        print('Now sending length {} ... '.format(next_payload_size), end="")
+        print('Now sending length 3 ')
         radio.write(send_payload[:next_payload_size])
 
         # Now, continue listening

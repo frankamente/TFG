@@ -197,7 +197,7 @@ void loop(void)
         Serial.print("Correcto\n");
       }
       else {
-        Serial.println("No es lo esperado")
+        Serial.println("No es lo esperado");
       }
       
       // First, stop listening so we can talk
