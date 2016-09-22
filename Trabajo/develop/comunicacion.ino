@@ -1,7 +1,8 @@
 int primeraVez = 0;
-int esX, esY = 0;
+
 void comunicar()
 {
+  
   int aaa = 0;
 
   if ( role == 1 && recibido == false)
@@ -76,33 +77,35 @@ void comunicar()
 
 void accion() {
   if (esX == 1) {
-    int aviso = giro_izquierda(15);
-    Serial.print("\nAviso: "); Serial.println(aviso);
-    if (aviso == 1) {
-      avz = 0;
+    giro_izquierda(15);
+
+    if (fin == true) {
+      esX = 0;
       Serial.println("OK");
       recibido = false;
+      sitio=false;
     }
   }
   else if (esX == 2) {
-        int aviso = giro_derecha(10);
-    Serial.print("\nAviso: "); Serial.println(aviso);
-    if (aviso == 1) {
-      avz = 0;
+    giro_derecha(10);
+
+    if (fin == true) {
+      esX = 0;
       Serial.println("OK");
       recibido = false;
+      sitio=false;
     }
   }
-    else if (esX == 3) {
-        int aviso = avanzar(15);
-    Serial.print("\nAviso: "); Serial.println(aviso);
-    if (aviso == 1) {
-      avz = 0;
+  else if (esX == 3) {
+    avanzar(15);
+    if (fin == true) {
+      esX = 0;
       Serial.println("OK");
       recibido = false;
+      sitio=false;
     }
   }
-  
+
   /*
     if (avz == 1) { //0 parado, 1 adelante, 2 atras
     int aviso = avanzar(vu);
@@ -112,7 +115,6 @@ void accion() {
     recibido = false;
     }
     }
-
     if (avz == 2) { //0 parado, 1 adelante, 2 atras
     int aviso = retroceder(vu);
     if (aviso == 1) {

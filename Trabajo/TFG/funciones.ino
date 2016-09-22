@@ -146,7 +146,7 @@ void leer_sensores() // Sensor 1 izquierda, 2 centro, 3 derecha
 int control(int vueltas_deseadas, int dist)
 {
   double Kp = 75;
-  double Ti = 0.2;
+  double Ti = 0.24;
 
   dif_tiempo = tiempo - tiempo_a;
   errorposicion = vueltas_deseadas - dist;

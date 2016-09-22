@@ -2,14 +2,10 @@
 #define MAX_DISTANCE 200 // Maximum distance we want to ping for (in centimeters). Maximum sensor distance is rated at 400-500cm.
 
 // Definicion de pines de ultrasonidos
-#define TRIGGER_PIN1  4  // Arduino pin tied to trigger pin on the ultrasonic sensor.
-#define ECHO_PIN1     5  // Arduino pin tied to echo pin on the ultrasonic sensor.
 
-#define TRIGGER_PIN2  6  // Arduino pin tied to trigger pin on the ultrasonic sensor.
-#define ECHO_PIN2     7  // Arduino pin tied to echo pin on the ultrasonic sensor.
 
-#define TRIGGER_PIN3  8  // Arduino pin tied to trigger pin on the ultrasonic sensor.
-#define ECHO_PIN3     9  // Arduino pin tied to echo pin on the ultrasonic sensor.
+#define TRIGGER_PIN  8  // Arduino pin tied to trigger pin on the ultrasonic sensor.
+#define ECHO_PIN     9  // Arduino pin tied to echo pin on the ultrasonic sensor.
 
 // Definicion de pines de Encoder
 #define OUT1  2  // PIN ENTRADA 1 ENCODER

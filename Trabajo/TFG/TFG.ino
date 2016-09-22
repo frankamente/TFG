@@ -90,9 +90,9 @@ void loop() {
 
   tiempo = millis();
 
+avanzar(10);
 
-
-  // si hay datos disponibles para leer
+  /*/ si hay datos disponibles para leer
   if (recibido == false)
   {
     comunicar();
@@ -101,7 +101,7 @@ void loop() {
   {
     accion();
   }
-
+*/
   /*////////////////////////////////// Mientras no llegue ningún dato, espera 10 ms y actualiza el tiempo y las distancias
     delay(10);
     int a = 0;

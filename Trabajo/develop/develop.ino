@@ -43,6 +43,7 @@ boolean movimiento = false;
 boolean rectifica = false;
 boolean reset = false;
 boolean fin = false;
+boolean sitio=false;
 
 unsigned long tiempo = 0;
 unsigned long t_actualizado = 0;
@@ -50,14 +51,13 @@ unsigned long t_actualizado = 0;
 
 boolean colision = false, choque = false;
 int detectado = 0;
-int dis1, dis2, dis3;
+int dis = 0;
 int dif_tiempo = 0, tiempo_a = 50;
 
 /// Definimos cada ultrasonido
 
-NewPing sonar1(TRIGGER_PIN1, ECHO_PIN1, MAX_DISTANCE); // NewPing setup of pins and maximum distance.
-NewPing sonar2(TRIGGER_PIN2, ECHO_PIN2, MAX_DISTANCE); // NewPing setup of pins and maximum distance.
-NewPing sonar3(TRIGGER_PIN3, ECHO_PIN3, MAX_DISTANCE); // NewPing setup of pins and maximum distance.
+NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); // NewPing setup of pins and maximum distance.
+
 
 
 void setup() {
@@ -86,15 +86,51 @@ void setup() {
   configMotores();
 }
 
+int esX = 0;
+int esY = 0;
+
 void loop() {
 
   tiempo = millis();
+  //leer_sensores();
+  /*
+    if (esX == 0) {
+      avanzar(-15);
+      if (fin == true) {
+        esX = 2;
+      }
+    }
+    else if (esX == 2) {
+      giro_derecha(25);
+      if (fin == true) {
+        esX = 3;
+      }
+    }
+    else if (esX == 3) {
+      avanzar(15);
+      if (fin == true) {
+        esX = 1;
+      }
+    }
+  */
 
 
-
-  // si hay datos disponibles para leer
-  if (recibido == false)
+  if (recibido == false && sitio == false)
   {
+    leer_sensores();
+    if (dis >= 20 && dis <= 30) {
+      parar();
+      comunicar();
+      sitio = true;
+    }
+    else if (dis > 30) {
+      avanzar(5);
+    }
+    else if (dis<20) {
+      avanzar(-5);
+    }
+  }
+  else if (recibido == false && sitio == true){
     comunicar();
   }
   if (recibido == true)
@@ -102,12 +138,6 @@ void loop() {
     accion();
   }
 
-  /*////////////////////////////////// Mientras no llegue ningún dato, espera 10 ms y actualiza el tiempo y las distancias
-    delay(10);
-    int a = 0;
-    tiempo_a = tiempo;
 
-    distDA = distD;
-    distIA = distI;
-  */
+
 }

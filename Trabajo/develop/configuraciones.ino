@@ -6,9 +6,12 @@ void configInterrupciones() // Interrupciones del encoder.
   digitalWrite (OUT1, HIGH );
   digitalWrite (OUT2, HIGH );
   // La interrupcion  0 monitorea los cambios de estado del pin 2.
-  attachInterrupt(0, inter0, RISING);
+  attachInterrupt(0, inter0, RISING);//CHANGE);
   // La interrupcion  1 monitorea los cambios de estado del pin 3.
-  attachInterrupt(1, inter1, RISING);
+  attachInterrupt(1, inter1, RISING);//CHANGE);
+  
+  /*MsTimer2::set(tsensores, sensores);
+  MsTimer2::start();*/
 }
 
 void configMotores()

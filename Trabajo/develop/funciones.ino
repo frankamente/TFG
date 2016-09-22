@@ -26,7 +26,10 @@ void parar()
   adelante = 0;
   atras = 0;
   mover_adelante();
+  distI = 0;
+  distD = 0;
   velocidad(0, 0);
+
 }
 
 void avanza(double vel)
@@ -95,36 +98,17 @@ void velocidad(int velI, int velD)
 void leer_sensores() // Sensor 1 izquierda, 2 centro, 3 derecha
 {
 
-  unsigned int uS1 = sonar1.ping();
+  unsigned int uS1 = sonar.ping();
   if (uS1 / US_ROUNDTRIP_CM == 0)
   {
-    dis1 = 200;
+    dis = 200;
   }
   else
   {
-    dis1 = uS1 / US_ROUNDTRIP_CM;
-  }
-  unsigned int uS2 = sonar2.ping();
-  if (uS2 / US_ROUNDTRIP_CM == 0)
-  {
-    dis2 = 200;
-  }
-  else
-  {
-    dis2 = uS2 / US_ROUNDTRIP_CM;
-  }
-  unsigned int uS3 = sonar3.ping();
-  if (uS3 / US_ROUNDTRIP_CM == 0)
-  {
-    dis3 = 200;
-  }
-  else
-  {
-    dis3 = uS3 / US_ROUNDTRIP_CM;
+    dis = uS1 / US_ROUNDTRIP_CM;
   }
 
-
-  if (dis1 < 20 || dis2 < 30 || dis3 < 20 )
+  if (dis < 20 )
   {
     colision = true;
   }
@@ -132,12 +116,8 @@ void leer_sensores() // Sensor 1 izquierda, 2 centro, 3 derecha
   {
     colision = false;
   }
-  //Serial.print("Izquierda: ");
-  Serial.println(dis1);
-  //Serial.print("Centro: ");
-  Serial.println(dis2);
-  //Serial.print("Derecha: ");
-  Serial.println(dis3);
+  Serial.println(dis);
+
 }
 
 
@@ -152,7 +132,7 @@ int control(int vueltas_deseadas, int dist)
   errorposicion = vueltas_deseadas - dist;
   int_err = int_err_1 + (errorposicion * 0.001);
   errorvelocidad = errorposicion / dif_tiempo;
-  intensidad = int(Kp * (errorposicion + (1 / Ti) * int_err))*1.6;
+  intensidad = int(Kp * (errorposicion + (1 / Ti) * int_err));
   int_err_1 = int_err;
 
   return intensidad;
@@ -161,14 +141,14 @@ int control(int vueltas_deseadas, int dist)
 
 //////////////////////////// Movimientos ///////////////////////////////
 
-int avanzar(int vueltas)
+void avanzar(int vueltas)
 {
-
   intensidad = control(vueltas, distI);
   Serial.print("Intensidad: ");
   Serial.print(intensidad);
   Serial.print(" DistanciaI: ");
   Serial.println(distI);
+  fin = false;
   if (intensidad > 30) {
     avanza(intensidad);
   }
@@ -179,6 +159,9 @@ int avanzar(int vueltas)
   else
   {
     parar();
+    fin = true;
+    distI = 0;
+    distD = 0;
     choque = false;
     detectado = 0;
     if (rectifica)
@@ -191,28 +174,29 @@ int avanzar(int vueltas)
       movimiento = false;
     }
     Serial.println("Para avz ");
-    distI = 0;
-    distD = 0;
-    return (1);
   }
 }
-
-int retroceder(int vueltas)
+void retroceder(int vueltas)
 {
   intensidad = control(vueltas, distI);
   Serial.print("Intensidad: ");
   Serial.print(intensidad);
   Serial.print(" DistanciaI: ");
   Serial.println(distI);
+  fin = false;
   if (intensidad > 30) {
     avanza(intensidad);
   }
   else if (intensidad < -15)
   {
-    retrocede(-intensidad);
+    retrocede(intensidad);
   }
-  else {
+  else
+  {
     parar();
+    fin = true;
+    distI = 0;
+    distD = 0;
     choque = false;
     detectado = 0;
     if (rectifica)
@@ -224,20 +208,19 @@ int retroceder(int vueltas)
     {
       movimiento = false;
     }
-    Serial.println("Para atras ");
-    distI = 0;
-    distD = 0;
-    return (1);
+    Serial.println("Para avz ");
   }
 }
 
-int giro_derecha(int vueltas)
+
+void giro_derecha(int vueltas)
 {
   intensidad = control(vueltas, distI);
   Serial.print("Intensidad: ");
   Serial.print(intensidad);
   Serial.print(" DistanciaI: ");
   Serial.println(distI);
+  fin = false;
   if (intensidad > 30) {
     girar_izquierda_adelante(intensidad);
   }
@@ -247,6 +230,9 @@ int giro_derecha(int vueltas)
   }
   else {
     parar();
+    fin = true;
+    distI = 0;
+    distD = 0;
     choque = false;
     detectado = 0;
     if (rectifica)
@@ -259,9 +245,6 @@ int giro_derecha(int vueltas)
       movimiento = false;
     }
     Serial.println("Para der ");
-    distI = 0;
-    distD = 0;
-    return 1;
   }
 }
 
@@ -295,7 +278,7 @@ int giro_derecha_atras(int vueltas)
   }
 }
 
-int giro_izquierda(int vueltas)
+void giro_izquierda(int vueltas)
 {
   Serial.println("Giro izq ");
   intensidad = control(vueltas, distD);
@@ -303,6 +286,9 @@ int giro_izquierda(int vueltas)
   Serial.print(intensidad);
   Serial.print(" DistanciaD: ");
   Serial.println(distD);
+  Serial.print(" Integral Error: ");
+  Serial.println(int_err);
+  fin = false;
   if (intensidad > 30) {
     girar_derecha_adelante(intensidad);
   }
@@ -312,6 +298,9 @@ int giro_izquierda(int vueltas)
   }
   else {
     parar();
+    fin = true;
+    distI = 0;
+    distD = 0;
     choque = false;
     detectado = 0;
     if (rectifica)
@@ -324,9 +313,6 @@ int giro_izquierda(int vueltas)
       movimiento = false;
     }
     Serial.println("Para izq ");
-    distI = 0;
-    distD = 0;
-    return 1;
   }
 }
 
