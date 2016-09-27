@@ -37,7 +37,7 @@ void avanza(double vel)
   adelante = 1;
   atras = 0;
   mover_adelante();
-  velocidad(vel, vel);
+  velocidad(vel*0.93, vel);
 }
 
 void retrocede(double vel)
@@ -289,6 +289,9 @@ void giro_izquierda(int vueltas)
   Serial.print(" Integral Error: ");
   Serial.println(int_err);
   fin = false;
+  if(distD<3){
+    intensidad=intensidad*1.8;
+  }
   if (intensidad > 30) {
     girar_derecha_adelante(intensidad);
   }

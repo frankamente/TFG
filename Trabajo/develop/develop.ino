@@ -88,7 +88,7 @@ void setup() {
 
 int esX = 0;
 int esY = 0;
-
+int contador=0;
 void loop() {
 
   tiempo = millis();
@@ -118,15 +118,20 @@ void loop() {
   if (recibido == false && sitio == false)
   {
     leer_sensores();
-    if (dis >= 20 && dis <= 30) {
-      parar();
+    if (dis >= 30 && dis <= 45) {
+      contador++;
+      if (contador>7){
+        contador=0;
+        parar();
       comunicar();
       sitio = true;
+      }
+      
     }
-    else if (dis > 30) {
+    else if (dis > 45) {
       avanzar(5);
     }
-    else if (dis<20) {
+    else if (dis<30) {
       avanzar(-5);
     }
   }
@@ -139,5 +144,5 @@ void loop() {
   }
 
 
-
+delay(20);
 }

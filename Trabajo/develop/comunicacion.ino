@@ -77,7 +77,7 @@ void comunicar()
 
 void accion() {
   if (esX == 1) {
-    giro_izquierda(15);
+    giro_izquierda(13);
 
     if (fin == true) {
       esX = 0;
