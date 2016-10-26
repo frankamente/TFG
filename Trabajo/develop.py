@@ -187,7 +187,7 @@ while True:
             receive_payload = radio.read(longitud)
             if int(longitud) > 0 and int(receive_payload)==izq:
               print("Recibido ACK inicial.")
-              recibido:True
+              recibido=True
             else:
               print("No recibo bien el ACK inicial.")
 
