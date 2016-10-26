@@ -250,9 +250,25 @@ while True:
               receive_payload = radio.read(longitud)
               if int(longitud) > 0 and int(receive_payload)==izq:
                 print("Recibido ACK izquierda.")
-                recibido = False
+                while (not radio.available()) and (not timeout):
+	              if (millis() - started_waiting_at) > 500:
+	                timeout = True
+
+	        # Describe the results
+	            if timeout:
+	              print('Falla El Giro izquierda2.')
+	            else:
+	              # Grab the response, compare, and send to debugging spew
+	              longitud = radio.getDynamicPayloadSize()
+	              receive_payload = radio.read(longitud)
+	              if int(longitud) > 0 and int(receive_payload)==izq:
+	                print("Recibido ACK izquierda2.")
+	                recibido = False
+	              else:
+	                print("No recibo bien el ACK izquierda2.")
+                
               else:
-                print("No recibo bien el ACK izquierda.")
+                print("No recibo bien el ACK izquierda1.")
 
 
           elif giroder > giroizq and giroder > stop:
