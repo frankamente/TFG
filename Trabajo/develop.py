@@ -122,11 +122,12 @@ z=000
 izq=1
 der=2
 stopp=3
+recibido=False
 
 
 
 
-print("[INFO] waiting for camera to warmup...")
+print("Iniciando el programa...")
 vs = VideoStream(0).start()
 time.sleep(2.0)
 
@@ -163,38 +164,68 @@ while True:
         cv2.drawContours(mask, [c], -1, 0, -1)
         #recorte=imutils.resize(recorte, width=271)
         #recorte=imutils.resize(recorte, height=195)
-        recorte=cv2.resize(recorte, (271, 195)) 
+        recorte=cv2.resize(recorte, (271, 195))
+
+        while recibido==False:
+
+          radio.stopListening()
+          send_payload = bytes(z)
+          radio.write(send_payload[:next_payload_size])
+          radio.startListening()
+          started_waiting_at = millis()
+          timeout = False
+          while (not radio.available()) and (not timeout):
+            if (millis() - started_waiting_at) > 500:
+              timeout = True
+
+          # Describe the results
+          if timeout:
+            print('Falla el envio inicial')
+          else:
+            # Grab the response, compare, and send to debugging spew
+            longitud = radio.getDynamicPayloadSize()
+            receive_payload = radio.read(longitud)
+            if int(longitud) > 0 and int(receive_payload)==izq:
+              print("Recibido ACK inicial.")
+              recibido:True
+            else:
+              print("No recibo bien el ACK inicial.")
+
+
+
+
+
         m1=mse(recorte,template1)
         s1=ssim(recorte,template1)
         m2=mse(recorte,template2)
         s2=ssim(recorte, template2)
         s3=ssim(recorte, template3)
         m3=mse(recorte,template3)
-        print("\nM1: ")
-        print(m1)
-        print("\nM2: ")
-        print(m2)
-        print("\nS1: ")
-        print(s1)
-        print("\nS2: ")
-        print(s2)
+        #print("\nM1: ")
+        #print(m1)
+        #print("\nM2: ")
+        #print(m2)
+        #print("\nS1: ")
+        #print(s1)
+        #print("\nS2: ")
+        #print(s2)
         if s1>s2 and s1>s3:
           giroizq+=1
           i=i+1
-          print("Giro Izquierda")
+          #print("Giro Izquierda")
         elif s2>s1 and s2 >s3:
           giroder+=1
           i=i+1
-          print("Giro Derecha")
+          #print("Giro Derecha")
         elif (s3) > (s1) and (s3) > (s2):
           stop+=1
           i=i+1
-          print("Stop")
+          #print("Stop")
         if i==5:
           i=0
-          print("Izq= " + str(giroizq))
-          print("Der= " + str(giroder))
-          print("STOP= " + str(stop))
+          #print("Izq= " + str(giroizq))
+          #print("Der= " + str(giroder))
+          #print("STOP= " + str(stop))
           if giroizq > giroder and giroizq > stop:
             print("Giro Izquierda")
             giroizq=0
@@ -219,6 +250,7 @@ while True:
               receive_payload = radio.read(longitud)
               if int(longitud) > 0 and int(receive_payload)==izq:
                 print("Recibido ACK izquierda.")
+                recibido == False
               else:
                 print("No recibo bien el ACK izquierda.")
 
@@ -247,6 +279,7 @@ while True:
               receive_payload = radio.read(longitud)
               if int(longitud) > 0 and int(receive_payload)==der:
                 print("Recibido ACK Derecha.")
+                recibido == False
               else:
                 print("No recibo bien el ACK Derecha.")
 
@@ -275,6 +308,7 @@ while True:
               receive_payload = radio.read(longitud)
               if int(longitud) > 0 and int(receive_payload)==stopp:
                 print("Recibido ACK stop.")
+                recibido == False
               else:
                 print("No recibo bien el ACK stop.")
 
