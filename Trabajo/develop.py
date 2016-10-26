@@ -288,31 +288,31 @@ while True:
 
         # Describe the results
             if timeout:
-              print('Falla El Giro Derecha.')
+              print('Falla El Giro Derecha1.')
             else:
               # Grab the response, compare, and send to debugging spew
               longitud = radio.getDynamicPayloadSize()
               receive_payload = radio.read(longitud)
               if int(longitud) > 0 and int(receive_payload)==der:
-                print("Recibido ACK Derecha.")
+                print("Recibido ACK Derecha1.")
                 while (not radio.available()) and (not timeout):
                   if (millis() - started_waiting_at) > 500:
                     timeout = True
 
             # Describe the results
                 if timeout:
-                  print('Falla El Giro Derecha.')
+                  print('Falla El Giro Derecha2.')
                 else:
                   # Grab the response, compare, and send to debugging spew
                   longitud = radio.getDynamicPayloadSize()
                   receive_payload = radio.read(longitud)
                   if int(longitud) > 0 and int(receive_payload)==der:
-                    print("Recibido ACK Derecha.")
+                    print("Recibido ACK Derecha2.")
                     recibido = False
                   else:
-                    print("No recibo bien el ACK Derecha.")
+                    print("No recibo bien el ACK Derecha2.")
               else:
-                print("No recibo bien el ACK Derecha.")
+                print("No recibo bien el ACK Derecha1.")
 
 
           elif stop > giroizq and stop > giroder:
@@ -332,7 +332,7 @@ while True:
 
         # Describe the results
             if timeout:
-              print('Falla El Stop.')
+              print('Falla El Stop1.')
             else:
               # Grab the response, compare, and send to debugging spew
               longitud = radio.getDynamicPayloadSize()
@@ -345,7 +345,7 @@ while True:
 
             # Describe the results
                 if timeout:
-                  print('Falla El Stop.')
+                  print('Falla El Stop2.')
                 else:
                   # Grab the response, compare, and send to debugging spew
                   longitud = radio.getDynamicPayloadSize()
@@ -354,9 +354,9 @@ while True:
                     print("Recibido ACK stop.")
                     recibido = False
                   else:
-                    print("No recibo bien el ACK stop.")
+                    print("No recibo bien el ACK stop2.")
               else:
-                print("No recibo bien el ACK stop.")
+                print("No recibo bien el ACK stop1.")
 
 
         #stop=0
