@@ -255,9 +255,9 @@ while True:
 	                timeout = True
 
 	        # Describe the results
-	            if timeout:
+	        if timeout:
 	              print('Falla El Giro izquierda2.')
-	            else:
+	        else:
 	              # Grab the response, compare, and send to debugging spew
 	              longitud = radio.getDynamicPayloadSize()
 	              receive_payload = radio.read(longitud)
