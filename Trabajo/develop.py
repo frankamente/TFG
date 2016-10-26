@@ -243,29 +243,29 @@ while True:
 
         # Describe the results
             if timeout:
-              print('Falla El Giro izquierda.')
+              print('Falla El Giro izquierda1.')
             else:
               # Grab the response, compare, and send to debugging spew
               longitud = radio.getDynamicPayloadSize()
               receive_payload = radio.read(longitud)
               if int(longitud) > 0 and int(receive_payload)==izq:
-                print("Recibido ACK izquierda.")
+                print("Recibido ACK izquierda1.")
                 while (not radio.available()) and (not timeout):
-	              if (millis() - started_waiting_at) > 500:
-	                timeout = True
+                if (millis() - started_waiting_at) > 500:
+                  timeout = True
 
-	        # Describe the results
-	            if timeout:
-	              print('Falla El Giro izquierda2.')
-	            else:
-	              # Grab the response, compare, and send to debugging spew
-	              longitud = radio.getDynamicPayloadSize()
-	              receive_payload = radio.read(longitud)
-	              if int(longitud) > 0 and int(receive_payload)==izq:
-	                print("Recibido ACK izquierda2.")
-	                recibido = False
-	              else:
-	                print("No recibo bien el ACK izquierda2.")
+          # Describe the results
+              if timeout:
+                print('Falla El Giro izquierda2.')
+              else:
+                # Grab the response, compare, and send to debugging spew
+                longitud = radio.getDynamicPayloadSize()
+                receive_payload = radio.read(longitud)
+                if int(longitud) > 0 and int(receive_payload)==izq:
+                  print("Recibido ACK izquierda2.")
+                  recibido = False
+                else:
+                  print("No recibo bien el ACK izquierda2.")
                 
               else:
                 print("No recibo bien el ACK izquierda1.")
@@ -295,7 +295,22 @@ while True:
               receive_payload = radio.read(longitud)
               if int(longitud) > 0 and int(receive_payload)==der:
                 print("Recibido ACK Derecha.")
-                recibido = False
+                while (not radio.available()) and (not timeout):
+                  if (millis() - started_waiting_at) > 500:
+                    timeout = True
+
+            # Describe the results
+                if timeout:
+                  print('Falla El Giro Derecha.')
+                else:
+                  # Grab the response, compare, and send to debugging spew
+                  longitud = radio.getDynamicPayloadSize()
+                  receive_payload = radio.read(longitud)
+                  if int(longitud) > 0 and int(receive_payload)==der:
+                    print("Recibido ACK Derecha.")
+                    recibido = False
+                  else:
+                    print("No recibo bien el ACK Derecha.")
               else:
                 print("No recibo bien el ACK Derecha.")
 
@@ -324,7 +339,22 @@ while True:
               receive_payload = radio.read(longitud)
               if int(longitud) > 0 and int(receive_payload)==stopp:
                 print("Recibido ACK stop.")
-                recibido = False
+                while (not radio.available()) and (not timeout):
+                  if (millis() - started_waiting_at) > 500:
+                    timeout = True
+
+            # Describe the results
+                if timeout:
+                  print('Falla El Stop.')
+                else:
+                  # Grab the response, compare, and send to debugging spew
+                  longitud = radio.getDynamicPayloadSize()
+                  receive_payload = radio.read(longitud)
+                  if int(longitud) > 0 and int(receive_payload)==stopp:
+                    print("Recibido ACK stop.")
+                    recibido = False
+                  else:
+                    print("No recibo bien el ACK stop.")
               else:
                 print("No recibo bien el ACK stop.")
 

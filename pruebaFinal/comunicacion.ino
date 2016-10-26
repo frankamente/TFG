@@ -1,5 +1,5 @@
 int primeraVez = 0;
-
+uint8_t len1;
 void comunicar()
 {
 
@@ -13,7 +13,7 @@ void comunicar()
 
       // Fetch the payload, and see if this was the last one.
       uint8_t len = radio.getDynamicPayloadSize();
-
+      len1=len;
       // If a corrupt dynamic payload is received, it will be flushed
       if (!len) {
         continue;
@@ -98,7 +98,7 @@ void accion() {
       sitio = false;
       radio.stopListening();
       // Send the final one back.
-      radio.write( receive_payload, len );
+      radio.write( receive_payload, len1 );
     }
   }
   else if (esX == 2) {
@@ -111,7 +111,7 @@ void accion() {
       sitio = false;
       radio.stopListening();
       // Send the final one back.
-      radio.write( receive_payload, len );
+      radio.write( receive_payload, len1 );
     }
   }
   else if (esX == 3) {
@@ -123,7 +123,7 @@ void accion() {
       sitio = false;
       radio.stopListening();
       // Send the final one back.
-      radio.write( receive_payload, len );
+      radio.write( receive_payload, len1 );
     }
   }
 
