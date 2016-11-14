@@ -1,0 +1,2 @@
+El CE en arduino se conecta al 22 y el CSN al 23
+En la raspberry pi hay que usar sudo para poder usar el programa.

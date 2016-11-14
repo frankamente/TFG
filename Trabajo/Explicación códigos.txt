@@ -1,0 +1,15 @@
+Motion_detector.py es un ejemplo de pyimagesearch que calcula si hay alguien en la habitacion haciendo diferencia de dos imágenes una de fondo y la actual.
+
+object_movement.py ejemplo en el que poniendo los valores umbrales maximos y mínimos en gbr podemos hacer seguimiento de un objeto redondo.
+
+trackbar.py programa para poder calcular los umbrales maximos y mínimos. Sacando la imagen real y la imagen en blanco y negro de los objetos en hsv.
+
+pingpair_dyn.py es un ejemplo de la libreria RF24 en examples_linux que me sirve para probar la conexión entre arduino y raspberry mediante nrf24
+
+comprobacion_nrf_python.ino ejemplo para hacer la comprobacion entre rpi y arduino de las conexiones del nrf24 hay que elegir el rol manualmente.
+
+todofuncionando_nofinal.py ejemplo en el que está incluido la comunicación nrf24 con el arduino y el seguimiento de la naranja en pantalla.
+
+recoEnvioArduino.py igual que el de arriba pero envía el centroide de la naranja y solo cuando la detecta. Envía primero 0, posX, posY y un valor de 999.
+
+recoEnvioArduino.ino recoge la posx y la posy del centroide de la naranja y si la posx es mayor que 250 hace un giro a la derecha.

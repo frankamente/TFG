@@ -1,0 +1,3 @@
+Ultrasonido 1 = izquierda
+Ultrasonido 2 = centro
+Ultrasonido 3 = derecha

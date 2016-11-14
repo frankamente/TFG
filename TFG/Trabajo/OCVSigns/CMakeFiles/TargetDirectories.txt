@@ -1,0 +1,3 @@
+/home/frankamente/repositorios/github/TFG/Trabajo/OCVSigns/CMakeFiles/edit_cache.dir
+/home/frankamente/repositorios/github/TFG/Trabajo/OCVSigns/CMakeFiles/rebuild_cache.dir
+/home/frankamente/repositorios/github/TFG/Trabajo/OCVSigns/CMakeFiles/testeOCV.dir
